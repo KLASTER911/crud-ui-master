@@ -30,8 +30,7 @@ class App extends Component {
                 __v:v});
     this.setState({data:newdata});
   }
-
-
+  
   addLine(){
 
     let xhr = new XMLHttpRequest();
