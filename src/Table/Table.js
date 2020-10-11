@@ -1,6 +1,7 @@
 import React from 'react';
+function Table(props){
 
-export default props => (
+return (
     <table className="table table-bordered">
         <thead className='thead-dark'>
             <tr>
@@ -28,6 +29,7 @@ export default props => (
         </tbody>
     </table>
 )
+}
 
 function deltResponse(delID){
     let xhr = new XMLHttpRequest();
@@ -57,3 +59,4 @@ function redactResponse(item){
         }
       };
 }
+export default Table;
