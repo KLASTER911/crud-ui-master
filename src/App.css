@@ -1,0 +1,15 @@
+.App {
+  text-align: center;
+  width: 1000px;
+  height: 1000px;
+
+}
+button {
+  transition-duration: 0.4s;
+}
+
+button:hover {
+  background-color: #4CAF50; /* Green */
+  color: white;
+
+}
