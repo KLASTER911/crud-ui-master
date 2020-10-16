@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
 import { createElement } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css'
+
 class Table extends Component {
     state = {
-    data: [], 
-    isActive: [],
+      data: [], 
+      isActive: [],
 }
 
 componentDidMount() {
   this.getData();
 }
 getData(){
-  let newdata =[];
-  this.setState({data:newdata})
   const xhr = new XMLHttpRequest();
   xhr.open('GET', 'http://178.128.196.163:3000/api/records');
   xhr.responseType = 'json';
   xhr.send();
   xhr.onload = () => {
-      const data = xhr.response;
-      console.log(data)
-  let newIsActive  = [];
+    const data = xhr.response;
+    console.log(data);
+    let newIsActive  = [];
     for (let i = 0; i<data.length; i++){
       newIsActive.push({_id:data[i]._id,
                     disabled: true,
@@ -63,7 +63,7 @@ createLine(){
   xhr.responseType = 'json';
   xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
   xhr.send(JSON.stringify({data:{Email:null,Login:null,Age:null}}));
-  this.getData();
+  xhr.onload = () => {this.getData();}
 }
 
 deltResponse(delID){
