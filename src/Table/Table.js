@@ -8,7 +8,28 @@ class Table extends Component {
 
 componentDidMount() {
   this.getData();
-  console.log(this.state)
+}
+getData(){
+  let newdata =[];
+  this.setState({data:newdata})
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', 'http://178.128.196.163:3000/api/records');
+  xhr.responseType = 'json';
+  xhr.send();
+  xhr.onload = () => {
+      const data = xhr.response;
+      console.log(data)
+  let newIsActive  = [];
+    for (let i = 0; i<data.length; i++){
+      newIsActive.push({_id:data[i]._id,
+                    disabled: true,
+                    namebut: true});
+    }
+    this.setState({
+      data,
+        isActive:newIsActive,
+      })}
+      console.log(this.state);
 }
 handleClik(item){
   let newIsActive = this.state.isActive;
@@ -20,7 +41,7 @@ handleClik(item){
       if(disabled===false){
         alert('Изменения сохранены');
         this.redactResponse(item._id);
-      } //добавить сюда обновление в базе
+      }
       newIsActive.splice(i,1,{_id : id, disabled: !disabled, 
         namebut: !namebut});
         this.setState({isActive:newIsActive})
@@ -29,28 +50,6 @@ handleClik(item){
   }
   
     }
-async getData(){
-  const response = await fetch(`http://178.128.196.163:3000/api/records`);
-  const data = await response.json();
-//const xhr = new XMLHttpRequest();
-//xhr.open('GET', 'http://178.128.196.163:3000/api/records');
-//xhr.responseType = 'json';
-//xhr.send();
-//const data = xhr.response;
-  let newIsActive  = [];
-  for (let i = 0; i<data.length; i++){
-    newIsActive.push({_id:data[i]._id,
-                  disabled: true,
-                  namebut: true});
-  }
-  this.setState({
-    data,
-    isActive:newIsActive,
-  })
-  console.log(this.state);
-  //console.log(this.state.isActive);
-
-}
 buttVision(ID){
  for (let i = 0; i<this.state.isActive.length;i++){
     if(this.state.isActive[i]._id === ID){
@@ -64,13 +63,12 @@ createLine(){
   xhr.responseType = 'json';
   xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
   xhr.send(JSON.stringify({data:{Email:null,Login:null,Age:null}}));
-  //xhr.send(JSON.stringify({data:{Email:'Boba',Login:'sdgsg',Age:252}}));
-  this.getData();
   this.getData();
 }
+
 deltResponse(delID){
   let xhr = new XMLHttpRequest();
-  let id = "5f889251ae66af078a51074d" //delID;
+  let id = delID;
   xhr.open('DELETE', 'http://178.128.196.163:3000/api/records/'+id);
   xhr.responseType = 'json';
   let newdata = this.state.data;
@@ -79,8 +77,7 @@ deltResponse(delID){
     if (xhr.status !== 200) {
       alert(`Ошибка ${xhr.status}: ${xhr.statusText}`);
     } else{
-      //alert(`Готово`);
-     //status = true;
+      alert(`Удалено`);
     }
   }
   xhr.send();
@@ -122,14 +119,12 @@ onTodoChange(value,itemID,data){
     if(this.state.data[i]._id === itemID){
       newdata[i].data[data] = value;
       console.log(data);
-      console.log(newdata[i].data); // добавить редактирование state.data 
-      //newdata[i].splice()
+      console.log(newdata[i].data);
       this.setState({data:newdata});
     }
   }
   
 }
-
   ///////////////////////////////////////////////////////////////////////////////////
   render() {
     return (
