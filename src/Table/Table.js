@@ -3,11 +3,14 @@ import { createElement } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 class Table extends Component {
-    state = {
+  constructor(props){
+    super(props)
+    this.state = {
       data: [], 
       isActive: [],
 }
-
+    
+  }
 componentDidMount() {
   this.getData();
 }
